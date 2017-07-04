@@ -1,0 +1,40 @@
+.topnav
+{
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+    border-bottom: 1px solid #eee;
+    height: 80px;
+    padding: 0 48px;
+    width: 100%;
+    margin-bottom: 24px;
+
+    background-color: #ffffff;
+}
+
+.navmenu
+{
+    display: block;
+    float: right !important;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    background: #FFF;
+}
+
+.logo {
+    display: block;
+    padding: 8px;
+    transition:all 1s;
+    float: left;
+    height: 70px;
+    width: 70px;
+    margin: auto;
+    line-height: 0px;
+}
+
+.logo-text
+{
+    font-weight: bold;
+    line-height: 78px !important;
+}
