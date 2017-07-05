@@ -52,10 +52,10 @@ The project "framework-example" shows an example server side project using this 
 
 To run the server:  
 `
-$ cd framework-example  
-$ mvn package  
-$ cd framework-example/target  
-$ java -jar framework-example-1.0.0.jar  
+$ cd framework-example<br />  
+$ mvn package<br />  
+$ cd framework-example/target<br />  
+$ java -jar framework-example-1.0.0.jar<br />  
 `
 
 ## Client side:  
@@ -63,17 +63,17 @@ The "client" folder is a react based project that could run in node.js developme
 
 To run the client for development usage:  
 `
-$ cd framework-webclient  
-$ npm install  
-$ npm run dev  
+$ cd framework-webclient<br />
+$ npm install<br />  
+$ npm run dev<br />  
 `
 
 For production usage:   
 `
-$ cd framework-webclient    
-$ npm install  
-$ npm run build  
-$ Copy the generated `dist` folder into nginx  
+$ cd framework-webclient<br />    
+$ npm install<br />  
+$ npm run build<br />  
+$ Copy the generated `dist` folder into nginx<br />  
 `
 
 # Development Guidance  

@@ -55,10 +55,10 @@ react + ant design + react-redux-router + redux-thunk + webpack + nginx
 
 运行服务端：
 `
-$ cd framework-example
-$ mvn package
-$ cd framework-example/target
-$ java -jar framework-example-1.0.0.jar
+$ cd framework-example<br />
+$ mvn package<br />
+$ cd framework-example/target<br />
+$ java -jar framework-example-1.0.0.jar<br />
 `
 
 ## 客户端:
@@ -66,17 +66,17 @@ $ java -jar framework-example-1.0.0.jar
 
 运行客户端开发模式:  
 `
-$ cd framework-webclient  
-$ npm install  
-$ npm run dev  
+$ cd framework-webclient<br />  
+$ npm install<br />  
+$ npm run dev<br />  
 `
 
 部署生产环境:  
 `
-$ cd framework-webclient  
-$ npm install  
-$ npm run build  
-$ Copy the generated `dist` folder into nginx  
+$ cd framework-webclient<br />  
+$ npm install<br />  
+$ npm run build<br />  
+$ Copy the generated `dist` folder into nginx<br />  
 `
 
 # 开发指南
