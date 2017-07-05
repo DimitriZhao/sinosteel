@@ -33,12 +33,12 @@ Hot deployment
 
 # Technology Stack  
 ## Server side         
-Foundation: Spring Boot       
-ORM: Spring Data Jpa & MyBatis        
-Cache: Redis       
-Security: Apache Shiro (stateless utilization)          
-Build: Apache Maven     
-JSON: FastJson       
+Foundation: spring boot       
+ORM: spring data jpa & mybatis        
+Cache: redis       
+Security: apache shiro (stateless utilization)          
+Build: apache maven     
+JSON: fastjson       
 
 ## Client side
 react + ant design + react-redux-router + redux-thunk + webpack + nginx
