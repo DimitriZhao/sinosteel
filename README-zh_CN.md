@@ -45,3 +45,39 @@ ORM：Spring Data JPA 和 MyBatis
 
 ## 客户端
 react + ant design + react-redux-router + redux-thunk + webpack + nginx
+
+# 使用说明
+该仓库中包含两个文件夹：“server”和“client”。“server”文件夹为服务端项目，“client”文件夹为客户端项目。两者都可以独立运行
+
+## 服务端
+“server”文件夹中包含“framework”和“framework-example”两个Java工程。“framework”是“framework-example”的依赖工程  
+“framework-example”是一个基于该框架所开发的项目 
+
+运行服务端：
+`
+$ cd framework-example
+$ mvn package
+$ cd framework-example/target
+$ java -jar framework-example-1.0.0.jar
+`
+
+## 客户端:
+“client”文件夹是一个可在nodejs环境下运行的react项目 
+
+运行客户端开发模式:
+`
+$ cd framework-webclient
+$ npm install
+$ npm run dev
+`
+
+部署生产环境:
+`
+$ cd framework-webclient
+$ npm install
+$ npm run build
+$ Copy the generated `dist` folder into nginx
+`
+
+# 开发指南
+未完待续

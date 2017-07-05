@@ -43,3 +43,38 @@ JSON: FastJson
 ## Client side
 react + ant design + react-redux-router + redux-thunk + webpack + nginx
 
+# Usage
+This repository contains two folders: "server" folder is for the server side, and "client" folder is for the client side, both of which are able to run dependently. 
+
+## Server side:
+In the "server" folder, there are 2 folders called "framework" and "framework-example" respectively, both of which are Java projects. "framework" serves as a dependency of "framework-example".  
+The project "framework-example" shows an example server side project using this framework.
+
+To run the server:
+`
+$ cd framework-example
+$ mvn package
+$ cd framework-example/target
+$ java -jar framework-example-1.0.0.jar
+`
+
+## Client side:
+The "client" folder is a react based project that could run in node.js development.
+
+To run the client for development usage:
+`
+$ cd framework-webclient
+$ npm install
+$ npm run dev
+`
+
+For production usage:
+`
+$ cd framework-webclient
+$ npm install
+$ npm run build
+$ Copy the generated `dist` folder into nginx
+`
+
+# Development Guidance
+To be continued
