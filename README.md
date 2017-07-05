@@ -29,7 +29,7 @@ Tabbed page presentation style
 Universal presentations of models         
 Common tools and components for request, file upload and authorizations etc        
 Nginx for proxy          
-Hot Deployment       
+Hot deployment       
 
 # Technology Stack  
 ## Server side         

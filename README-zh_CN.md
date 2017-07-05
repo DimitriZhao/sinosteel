@@ -37,21 +37,21 @@
 
 # 技术栈
 ## 服务端   
-基础：Spring Boot    
-ORM：Spring Data JPA 和 MyBatis        
-缓存：Redis      
-权限：Apache Shiro（无状态应用）    
-项目构建：Apache Maven      
+基础：spring boot    
+ORM：spring data jpa 和 mybatis        
+缓存：redis      
+权限：apache shiro（无状态应用）    
+项目构建：apache maven      
 
 ## 客户端
 react + ant design + react-redux-router + redux-thunk + webpack + nginx
 
 # 使用说明
-该仓库中包含两个文件夹：“server”和“client”。“server”文件夹为服务端项目，“client”文件夹为客户端项目。两者都可以独立运行
+该仓库中包含两个文件夹：“server” 和 “client”。“server” 文件夹为服务端项目，“client” 文件夹为客户端项目。两者都可以独立运行
 
 ## 服务端
-“server”文件夹中包含“framework”和“framework-example”两个Java工程。“framework”是“framework-example”的依赖工程  
-“framework-example”是一个基于该框架所开发的项目 
+“server” 文件夹中包含 “framework” 和 “framework-example” 两个Java工程。“framework” 是 “framework-example” 的依赖工程  
+“framework-example” 是一个基于该框架所开发的项目 
 
 运行服务端：
 
@@ -61,7 +61,7 @@ react + ant design + react-redux-router + redux-thunk + webpack + nginx
 `$ java -jar framework-example-1.0.0.jar`<br />
 
 ## 客户端:
-“client”文件夹是一个可在nodejs环境下运行的react项目 
+“client” 文件夹是一个可在nodejs环境下运行的react项目 
 
 运行客户端开发模式:  
   
