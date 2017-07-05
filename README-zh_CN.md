@@ -64,19 +64,19 @@ $ java -jar framework-example-1.0.0.jar
 ## 客户端:
 “client”文件夹是一个可在nodejs环境下运行的react项目 
 
-运行客户端开发模式:
+运行客户端开发模式:  
 `
-$ cd framework-webclient
-$ npm install
-$ npm run dev
+$ cd framework-webclient  
+$ npm install  
+$ npm run dev  
 `
 
-部署生产环境:
+部署生产环境:  
 `
-$ cd framework-webclient
-$ npm install
-$ npm run build
-$ Copy the generated `dist` folder into nginx
+$ cd framework-webclient  
+$ npm install  
+$ npm run build  
+$ Copy the generated `dist` folder into nginx  
 `
 
 # 开发指南
