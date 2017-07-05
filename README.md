@@ -72,7 +72,7 @@ For production usage:
 `$ cd framework-webclient`<br />
 `$ npm install`<br />
 `$ npm run build`<br />
-`$ Copy the generated `dist` folder into nginx`<br />
+`$ Copy the generated "dist" folder into nginx`<br />
 
 # Development Guidance  
 To be continued  

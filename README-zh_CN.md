@@ -74,7 +74,7 @@ react + ant design + react-redux-router + redux-thunk + webpack + nginx
 `$ cd framework-webclient`<br />
 `$ npm install`<br />
 `$ npm run build`<br />
-`$ Copy the generated `dist` folder into nginx`<br />
+`$ 将 “dist” 文件夹拷贝至nginx<br />
 
 # 开发指南
 未完待续
