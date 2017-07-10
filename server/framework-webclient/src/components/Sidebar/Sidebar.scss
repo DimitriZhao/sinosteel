@@ -1,0 +1,33 @@
+$sidebarWidth : 240px;
+
+.sidebar {
+  width: $sidebarWidth;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  min-height: 600px;
+  background-color: #404040;
+}
+
+.sidebar.light {
+	background-color: #fff;
+	box-shadow: -1px 0 0 #e9e9e9 inset;
+}
+
+.switchTheme {
+	padding: 15px 10px 10px;
+}
+
+.switchTheme .title {
+	color: #fff;
+	display: inline-block;
+	vertical-align: middle;
+	width: 155px;
+	padding-left: 15px;
+}
+
+.sidebar.light .switchTheme .title {
+	color: #666;
+}
