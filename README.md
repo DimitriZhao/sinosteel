@@ -27,6 +27,7 @@ Encapsulated mechanisms for http message, pagination, file upload and cache etc
 
 ## Client side:
 ES6       
+SPA   
 Object oriented development style        
 Tabbed page presentation style        
 Universal presentations of models         
