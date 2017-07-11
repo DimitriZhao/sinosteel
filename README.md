@@ -1,4 +1,7 @@
 # Introduction
+
+<a href="https://github.com/DimitriZhao/sinosteel/blob/master/README-zh_CN.md">中文README</a>
+
 This is a personal developed full-stack framework for conventional web application development, using Spring Boot for server side and React/Node.js for client side.
 
 # Demo
