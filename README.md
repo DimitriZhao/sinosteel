@@ -47,7 +47,7 @@ JSON: fastjson
 react + ant design + react-redux-router + redux-thunk + webpack + nginx
 
 # Usage
-This repository contains two folders: "server" folder is for the server side, and "client" folder is for the client side, both of which are able to run dependently. 
+This repository contains two folders: "server" folder is for the server side, and "client" folder is for the client side, both of which are able to run independently. 
 
 ## Server side:
 In the "server" folder, there are 2 folders called "framework" and "framework-example" respectively, both of which are Java projects. "framework" serves as a dependency of "framework-example".  
