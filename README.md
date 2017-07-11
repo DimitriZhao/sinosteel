@@ -31,7 +31,6 @@ Object oriented development style
 Tabbed page presentation style        
 Universal presentations of models         
 Common tools and components for request, file upload and authorizations etc        
-Nginx for proxy          
 Hot deployment       
 
 # Technology Stack  
@@ -76,7 +75,7 @@ For production usage:
 `$ npm install`<br />
 `$ npm run build`<br />
 
-Copy the generated "dist" folder into nginx<br />
+The generated files are in "dist" folder and can be deployed in nginx<br />
 
 # Development Guidance  
 To be continued  

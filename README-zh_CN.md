@@ -31,8 +31,7 @@
 面向对象的开发风格      
 标签页为主的展示风格    
 通用的实体模型展示      
-公共的用于文件上传，请求和权限工具          
-采用nginx做代理        
+公共的用于文件上传，请求和权限工具             
 可进行热部署          
 
 # 技术栈
@@ -75,7 +74,7 @@ react + ant design + react-redux-router + redux-thunk + webpack + nginx
 `$ npm install`<br />
 `$ npm run build`<br />
 
-将 “dist” 文件夹拷贝至nginx<br />
+生成的文件位于 dist 文件夹中, 可在nginx中部署<br />
 
 # 开发指南
 未完待续
