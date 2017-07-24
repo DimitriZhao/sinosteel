@@ -82,12 +82,12 @@ react + ant design + react-redux-router + redux-thunk + webpack + nginx
 
 假如有一个管理国家标准规范文件的需求，即对于公司收录的国家标准文件需要进行基本的增删改查操作，则需要定义标准文件的相关模型和服务，以下叙述将以该国家标准文件管理需求为例（也是framework-example中的例子）：   
 
-##服务端          
-###文件结构              
+## 服务端          
+### 文件结构              
 实际开发中，文件夹可以按照业务模块来划分，也可以按照代码分层规则划分。framework-example所给出的例子是按照业务模块来划分的，个人也比较倾向这种划分方式。  
 对于上述国家标准文件管理需求，可以新建一个包叫做knowledge，在knowledge这个package中再依次建立domain，repository，service，web4个子包，分别对应实体类层，数据访问层，业务逻辑层和控制交互层。  
 需要注意的是，以上为个人偏好的划分方式，框架并没有这样的“约定”。因此实际上，包的数量，包名等都可以自行定义。例如，若数据库采用反范式设计，不定义实体类，就无需domain包，若要使用mybatis，可以建立mapper包，将mybatis的mapper文件放到里面。事实上，framework中的system模块就采用了mybatis。  
-###代码分层             
+### 代码分层             
 (1) 实体类层     
 框架提供了BaseEntity基类供实体类继承，BaseEntity包含一些公共的基本信息包括id，name等。id为string类型，生成策略为uuid，因为个人不喜欢用自增主键。除非有特殊的需求设计，否则实体类都需要继承BaseEntity，才能使用框架的一些特性。   
 对于上述国家标准文件管理需求，则可以在knowledge.domain包中定义一个叫Standard的实体类，继承BaseEntity，即`public class Standard extends BaseEntity`     
@@ -175,8 +175,8 @@ Response中包含三个内容：status，data和message。status表示响应情�
 `public Response queryStandards(Request request)`        
 至此，后端开发完毕，后端将发布相应的带有权限rest风格服务供前端调用          
 
-##客户端               
-###文件结构              
+## 客户端               
+### 文件结构              
 该项目采用react全家桶，采用ES6语法，UI组件源自antd，脚手架引自：   
 https://github.com/bodyno/react-starter-kit    
 https://github.com/davezuko/react-redux-starter-kit    
@@ -187,7 +187,7 @@ https://github.com/davezuko
 好吧应该在2017年4月的时候貌似还没有说这个已经Deprecated。。。
 好在对于这个项目来说，脚手架不是重点。和服务端一样，这个客户端的框架主要提供一个基本CRUD的快速开发，就好比服务端如果换成spring mvc也是照样能用的一样。   
 文件结构和上述引用的脚手架一致，即页面部分都在`src/routes`中完成。和上文中提到的服务端类似，`src/routes`下的文件夹按照业务模块来进行划分，这是个人比较习惯的一种方式。      
-###开发步骤                
+### 开发步骤                
 对于基本的CRUD的页面，基本的元素可以简单分为：列表，搜索栏，新增页面，修改页面，查看页面。框架结合redux，将这些元素抽象成了一些公共页面，使开发无需关心如何设置redux的store，state，分页，样式等等，只需要继承这些公共页面即可完成基本CRUD开发。框架所抽象的公共页面元素位于`src/common/basic`中，包括：
 AddView：框架抽象的公共新增页面
 EditView：框架抽象的公共修改页面
@@ -196,8 +196,8 @@ ListComponent：框架抽象的公共数据列表组件
 SearchComponent：框架抽象的公共搜索栏组件
 OperationComponent：框架抽象的公共操作栏组件
 ListView：由ListComponent，SearchComponent和OperationComponent组合而成的公共列表页面。
-以下以上述国家标准文件管理需求为例来进行开发，首先，在`src/routes`下建立文件夹`knowledge`，在文件夹中新建`StandardAddView.js，StandardEditView.js，StandardInspectView.js，StandardListComponent.js，StandardSearchComponent.js，StandardListView.js`。事实上，这些新建的文件和上述的抽象公共页面是一一对应的。
-####新增页面（AddView）               
+以下以上述国家标准文件管理需求为例来进行开发，首先，在`src/routes`下建立文件夹`knowledge`，在文件夹中新建`StandardAddView.js，StandardEditView.js，StandardInspectView.js，StandardListComponent.js，StandardSearchComponent.js，StandardListView.js`。事实上，这些新建的文件和上述的抽象公共页面是一一对应的。        
+#### 新增页面（AddView）               
 `StandardAddView`表示新增国家标准文件的页面，可将它定义为一个类，并继承AddView，即：
 `import AddView from 'common/basic/components/AddView';`
 `export default class StandardAddView extends AddView`
@@ -208,8 +208,8 @@ ListView：由ListComponent，SearchComponent和OperationComponent组合而成�
 对于继承了AddView的类（在这里就是StandardAddView），需要给类属型`addPath`赋值，`addPath`是用于处理新增请求的后端服务路径     
 AddView由一个表单和一个提交按钮组成。在AddView基类中有两个重要方法：`handleValues(values)`和`renderForm(formItems, function(addButton))`。     
 `handleValues(values)`的作用是在表单将数据传给服务端之前，对数据进行处理。`values`为一个包含了表单所要提交的数据的object，在用户点击提交按钮后生成，`values`会在经过`handleValues`处理后提交给后端。`handleValues`函数的具体逻辑可以自行定义。     
-`renderForm(formItems, function(addButton))`的作用是渲染表单，其中，formItems为表单项的数组，可参考antd的官方例子。function(addButton)为处理addButton的函数，例如可以调整addButton的位置等。 
-####修改页面（EditView）                      
+`renderForm(formItems, function(addButton))`的作用是渲染表单，其中，formItems为表单项的数组，可参考antd的官方例子。function(addButton)为处理addButton的函数，例如可以调整addButton的位置等。       
+#### 修改页面（EditView）                      
 `StandardEditView`表示修改国家标准文件的页面，和StandardAddView一样，需要定义为一个类并继承EditView，即：      
 `import EditView from 'common/basic/components/EditView';`
 `export default class StandardEditView extends EditView`
@@ -218,8 +218,8 @@ AddView由一个表单和一个提交按钮组成。在AddView基类中有两个
 `}`   
 具体写法可参照framework-webclient   
 和AddView一样，对于继承了EditView的类（在这里就是StandardEditView），需要给类属型`editPath`赋值，`editPath`是用于处理修改请求的后端服务路径     
-EditView也由一个表单和一个提交按钮组成，但与AddView不同的是，既然是修改，那么所有的表单项都是有初始值的。在EditView基类中有三个重要的方法，其中`handleValues(values)`和`renderForm(formItems, function(editButton))`和AddView中的如出一辙，而第三个方法`handleInitValues(initValues)`则是用于在给表单项赋初始值之前，对初始值进行处理。其中，`initValues`为一个包含了表单所有项的初始值的object，在经过`handleInitValues`处理后会赋值给所有表单项。`handleInitValues`的逻辑可以自行定义。
-####查看页面（InspectView）                 
+EditView也由一个表单和一个提交按钮组成，但与AddView不同的是，既然是修改，那么所有的表单项都是有初始值的。在EditView基类中有三个重要的方法，其中`handleValues(values)`和`renderForm(formItems, function(editButton))`和AddView中的如出一辙，而第三个方法`handleInitValues(initValues)`则是用于在给表单项赋初始值之前，对初始值进行处理。其中，`initValues`为一个包含了表单所有项的初始值的object，在经过`handleInitValues`处理后会赋值给所有表单项。`handleInitValues`的逻辑可以自行定义。         
+#### 查看页面（InspectView）                 
 `StandardInspectView`表示查看国家标准文件的页面，和前两者一样，需要定义为一个类并继承InspectView，即：     
 `import InspectView from 'common/basic/components/InspectView';`
 `export default class StandardInspectView extends InspectView`
@@ -227,8 +227,8 @@ EditView也由一个表单和一个提交按钮组成，但与AddView不同的�
 `   ...`
 `}`   
 具体写法可参照framework-webclient   
-InspectView仅有一个赋有初始值且不能进行修改的表单，因而和前两者相比，处理相对简单一些。既然是查看，那么表单同样是有初始值的。和EditView不同的是，InspectView中的所有值是在`this.props.item`里面的，对其进行操作即可。此外，InspectView基类中同样提供了`renderForm(formItems)`方法，由于没有按钮所以没有第二个参数，仅需要对`formItems`进行操作即可。
-####数据列表组件（ListComponent)                       
+InspectView仅有一个赋有初始值且不能进行修改的表单，因而和前两者相比，处理相对简单一些。既然是查看，那么表单同样是有初始值的。和EditView不同的是，InspectView中的所有值是在`this.props.item`里面的，对其进行操作即可。此外，InspectView基类中同样提供了`renderForm(formItems)`方法，由于没有按钮所以没有第二个参数，仅需要对`formItems`进行操作即可。            
+#### 数据列表组件（ListComponent)                       
 `StandardListComponent`    即为国家标准文件的列表，和之前一样，需要定义为一个类并继承ListComponent，即：  
 `import ListComponent from 'common/basic/components/ListComponent';`
 `export default class StandardListComponent extends ListComponent`
@@ -242,8 +242,8 @@ InspectView仅有一个赋有初始值且不能进行修改的表单，因而和
 `inspectView`：点击“查看”按钮后，弹出的标签页的内容页面。在这个例子中，可以写成`this.inspectView = StandardInspectView`      
 `editViewTabName`：点击“修改”按钮后，弹出的标签页的标题。在这个例子中，可以写成`this.editViewTabName = '修改国家标准'`     
 `editView`：点击“修改”按钮后，弹出的标签页的内容页面。在这个例子中，可以写成`this.editView = StandardEditView`    
-`deletePath`：点击“删除”按钮后并在出现的对话框中选择“是”之后，前端发送到后端的删除请求路径 
-####公共搜索栏组件（SearchComponent）                 
+`deletePath`：点击“删除”按钮后并在出现的对话框中选择“是”之后，前端发送到后端的删除请求路径          
+#### 公共搜索栏组件（SearchComponent）                 
 `StandardSearchComponent`即为国家标准文件的搜索条件，和之前一样，需要定义为一个类并继承SearchComponent，即：    
 `import SearchComponent from 'common/basic/components/SearchComponent';`
 `export default class StandardSearchComponent extends SearchComponent`
@@ -251,8 +251,8 @@ InspectView仅有一个赋有初始值且不能进行修改的表单，因而和
 `   ...`
 `}`    
 具体写法可参照framework-webclient    
-和上述的AddView的写法一样，SearchComponent由一个表单和一个搜索提交按钮组成，需要给基类的类属性`queryPath`赋值，表示后端的搜索请求路径，并指定formItems然后使用基类的`renderForm(formItems)`来渲染表单，用法也和上述的AddView相同，这里不再赘述。    
-####公共操作栏组件（OperationComponent）               
+和上述的AddView的写法一样，SearchComponent由一个表单和一个搜索提交按钮组成，需要给基类的类属性`queryPath`赋值，表示后端的搜索请求路径，并指定formItems然后使用基类的`renderForm(formItems)`来渲染表单，用法也和上述的AddView相同，这里不再赘述。     
+#### 公共操作栏组件（OperationComponent）               
 `StandardOperationComponent`即为操作栏，和之前一样，需要定义为一个类并继承OperationComponent，即：  
 `import OperationComponent from 'common/basic/components/OperationComponent';`
 `export default class StandardOperationComponent extends OperationComponent`
@@ -263,8 +263,8 @@ InspectView仅有一个赋有初始值且不能进行修改的表单，因而和
 其写法比InspectView还要简单，只需要指定以下属性的值即可：   
 `addViewName`：点击“新增”按钮后，弹出的标签页的标题。在这个例子中，可以写成`this.addViewName = '新增国家标准'`    
 `addView`：点击“新增”按钮后，弹出的标签页的内容页面。在这个例子中，可以写成`this.addView = StandardAddView`    
-`deletePath`：点击“删除”按钮后并在出现的对话框中选择“是”之后，前端发送到后端的删除请求路径 
-####公共列表页面（ListView）                
+`deletePath`：点击“删除”按钮后并在出现的对话框中选择“是”之后，前端发送到后端的删除请求路径             
+#### 公共列表页面（ListView）                
 `StandardListView`即为组合了`StandardSearchComponent`，`StandardOperationComponent`和`StandardListComponent`的列表页面。同样，它需要被定义为一个类，并继承ListView，即：   
 `import ListView from 'common/basic/components/ListView';`
 `export default class StandardListView extends ListView`
@@ -287,7 +287,7 @@ InspectView仅有一个赋有初始值且不能进行修改的表单，因而和
 `}`          
 其中，`path`需要和之前在服务端所定义的`structure.json`中对应的menu中的`menuPath`一致。`ItemContainer`位于`src/common/basic/containers`中，它所需的第一个参数是对应的redux的store中模块的名称，需要和在ListView中定义的`name`类属型一致。第二个参数是对应的ListView（不是名称，需要import对应的ListView组件）。    
 至此，前端相应部分开发完毕，使用者无需关心如何实现权限，分页，设计样式等等令人头疼的问题。      
-#项目引用                 
+# 项目引用                 
 https://github.com/bodyno/react-starter-kit    
 https://github.com/davezuko/react-redux-starter-kit    
 在此表示感谢   
