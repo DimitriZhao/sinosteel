@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sinosteel.framework.config.system.SystemConfig;
 import com.sinosteel.framework.core.base.service.BaseService;
 import com.sinosteel.framework.core.utils.cache.CacheUtil;
 import com.sinosteel.framework.helpers.hierarchy.helper.HierarchyHelper;
@@ -31,8 +31,8 @@ import com.sinosteel.framework.utils.string.StringUtil;
 @Service
 public class UserService extends BaseService<User>
 {
-	@Value("${primeOrganization}")
-	private String primeOrganization;
+	@Autowired
+	private SystemConfig systemConfig;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -53,7 +53,7 @@ public class UserService extends BaseService<User>
 	{
 		return userRepository.findByUsername(username);
 	}
-	
+
 	public User getLoginUser(JSONObject params) throws Exception
 	{
 		String userName = params.getString("username");
@@ -201,6 +201,7 @@ public class UserService extends BaseService<User>
 		
 		this.saveEntity(userToAdd, user);
 		
+		String primeOrganization = systemConfig.getProperty("primeOrganization");
 		organizationUserMapper.insertOrganizationUser(primeOrganization, userId, "0");
 	}
 	

@@ -7,7 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import com.sinosteel.framework.core.base.repository.BaseRepository;
 
 @NoRepositoryBean
-public interface HierarchyRepository<T extends Hierarchy> extends BaseRepository<T> 
+public interface HierarchyRepository<T extends Hierarchy<T>> extends BaseRepository<T> 
 {
 	List<T> findByParentId(String parentId);
 }

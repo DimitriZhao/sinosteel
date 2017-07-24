@@ -25,6 +25,8 @@ public interface BaseRepository<T extends BaseEntity> extends JpaRepository<T, S
 	
 	<U> List<U> executeSql(String sql, HashMap<String, Object> paramsMap);
 	
+	int executeSql(String sql);
+	
 	List<T> executeHql(String hql, HashMap<String, Object> paramsMap);
 
 	<U> List<U> executeHqlIndicatingType(String hql, HashMap<String, Object> paramsMap);

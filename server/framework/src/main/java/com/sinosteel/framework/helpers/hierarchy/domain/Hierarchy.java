@@ -9,7 +9,7 @@ import javax.persistence.Transient;
 import com.sinosteel.framework.core.base.domain.BaseEntity;
 
 @MappedSuperclass
-public class Hierarchy extends BaseEntity
+public class Hierarchy<T extends Hierarchy<T>> extends BaseEntity
 {
 	private static final long serialVersionUID = 4998039521607719893L;
 
@@ -17,10 +17,10 @@ public class Hierarchy extends BaseEntity
 	private String parentId;
 	
 	@Transient
-	private List<? extends Hierarchy> children;
+	private List<T> children;
 	
 	@Transient
-	private Hierarchy parent;
+	private Hierarchy<T> parent;
 
 	public String getParentId() {
 		return parentId;
@@ -30,23 +30,19 @@ public class Hierarchy extends BaseEntity
 		this.parentId = parentId;
 	}
 
-	public List<? extends Hierarchy> getChildren() 
-	{
+	public List<T> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<? extends Hierarchy> children) 
-	{
+	public void setChildren(List<T> children) {
 		this.children = children;
 	}
 
-	public Hierarchy getParent() 
-	{
+	public Hierarchy<T> getParent() {
 		return parent;
 	}
 
-	public void setParent(Hierarchy parent) 
-	{
+	public void setParent(Hierarchy<T> parent) {
 		this.parent = parent;
 	}
 }

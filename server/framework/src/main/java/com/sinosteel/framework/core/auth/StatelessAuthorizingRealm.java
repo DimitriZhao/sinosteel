@@ -15,13 +15,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.sinosteel.framework.core.cache.RedisService;
 import com.sinosteel.framework.core.utils.cache.CacheUtil;
 import com.sinosteel.framework.system.basic.domain.User;
-import com.sinosteel.framework.system.basic.service.UserService;
+import com.sinosteel.framework.system.basic.repository.UserRepository;
 import com.sinosteel.framework.utils.encryption.HmacSHA256Util;
 
 public class StatelessAuthorizingRealm extends AuthorizingRealm
 {
 	@Autowired
-	private UserService userService;
+	private UserRepository userRepository;
 
 	@Autowired
 	private RedisService redisService;
@@ -41,7 +41,7 @@ public class StatelessAuthorizingRealm extends AuthorizingRealm
     	JSONObject userInfoJson = CacheUtil.getUserInfoJson(username);
     	if(userInfoJson == null)
     	{ 	
-    		User user = userService.getUserByUsername(username);  
+    		User user = userRepository.findByUsername(username);  
         	if(user == null)
         	{
                 return null;
@@ -65,7 +65,7 @@ public class StatelessAuthorizingRealm extends AuthorizingRealm
     	JSONObject userInfoJson = CacheUtil.getUserInfoJson(username);
     	if(userInfoJson == null)
     	{
-    		User user = userService.getUserByUsername(username);  
+    		User user = userRepository.findByUsername(username);  
         	if(user == null)
         	{
                 return null;

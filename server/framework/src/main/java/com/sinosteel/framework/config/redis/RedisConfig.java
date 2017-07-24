@@ -1,6 +1,6 @@
 package com.sinosteel.framework.config.redis;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,24 +9,19 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
+@ConfigurationProperties(locations = "classpath:config/redis.properties", prefix = "spring.redis")
 public class RedisConfig extends CachingConfigurerSupport
 {  
-	@Value("${spring.redis.hostName}")
-    private String host;
+    private String hostName;
 
-    @Value("${spring.redis.port}")
     private int port;
 
-    @Value("${spring.redis.timeout}")
     private int timeout;
 
-    @Value("${spring.redis.pool.maxIdle}")
     private int maxIdle;
 
-    @Value("${spring.redis.pool.maxWait}")
     private long maxWaitMillis;
 
-    @Value("${spring.redis.password}")
     private String password;
 
     @Bean
@@ -36,7 +31,7 @@ public class RedisConfig extends CachingConfigurerSupport
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
 
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout);
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, hostName, port, timeout, password);
 
         return jedisPool;
     }

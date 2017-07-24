@@ -17,6 +17,7 @@ import com.sinosteel.framework.helpers.pagination.Pager;
 public class BaseRepositoryImpl<T extends BaseEntity> extends SimpleJpaRepository<T, String> implements BaseRepository<T>
 {
 	private final Class<T> domainClass;
+
 	private final EntityManager entityManager;
 
 	public BaseRepositoryImpl(Class<T> domainClass, EntityManager entityManager)
@@ -47,6 +48,13 @@ public class BaseRepositoryImpl<T extends BaseEntity> extends SimpleJpaRepositor
 		return query.getResultList();
 	}
 
+	@Override
+	public int executeSql(String sql)
+	{
+		Query query = this.entityManager.createNativeQuery(sql);
+		return query.executeUpdate();
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> executeHql(String hql, HashMap<String, Object> paramsMap)

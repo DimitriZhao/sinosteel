@@ -1,0 +1,293 @@
+[
+    {
+        "id": "0",       
+        "code": "SYSTEM",      
+        "name": "系统管理",
+        "moduleIcon": "setting",
+        "modulePath": "/index/system",
+        "menus": [
+            { 
+                "id": "0-0",
+                "code": "0-0",
+                "name": "用户管理",
+                "menuIcon": "idcard",
+                "menuPath": "/user_list",
+                "functions": [
+                    {
+                        "id": "0-0-F0",
+                        "code": "0-0-F0",
+                        "name": "新增用户",                        
+                        "functionString": "addUser"
+                    },
+                    {
+                        "id": "0-0-F1",
+                        "code": "0-0-F1",
+                        "name": "修改用户",
+                        "functionString": "editUser"
+                    },
+                    {
+                        "id": "0-0-F2",
+                        "code": "0-0-F2",
+                        "name": "删除用户",
+                        "functionString": "deleteUser"
+                    },
+                    {
+                        "id": "0-0-F3",
+                        "code": "0-0-F3",
+                        "name": "查询用户",
+                        "functionString": "queryUsers"
+                    }
+                ]
+            },
+            {   
+                "id": "0-1",
+                "code": "0-1",
+                "name": "组织管理",
+                "menuIcon": "usb",
+                "menuPath": "/organization_tree",
+                "functions": [
+                    {
+                        "id": "0-1-F0",
+                        "code": "0-1-F0",
+                        "name": "新增组织",
+                        "functionString": "addOrganization"
+                    },
+                    {
+                        "id": "0-1-F1",
+                        "code": "0-1-F1",
+                        "name": "修改组织",                        
+                        "functionString": "editOrganization"
+                    },
+                    {
+                        "id": "0-1-F2",
+                        "code": "0-1-F2",
+                        "name": "删除组织",
+                        "functionString": "deleteOrganization"
+                    },
+                    {
+                        "id": "0-1-F3",
+                        "code": "0-1-F3",
+                        "name": "新增角色",                       
+                        "functionString": "addRole"
+                    },
+                    {
+                        "id": "0-1-F4",
+                        "code": "0-1-F4",
+                        "name": "修改角色",
+                        "functionString": "editRole"
+                    },
+                    {
+                        "id": "0-1-F5",
+                        "code": "0-1-F5",
+                        "name": "删除角色",
+                        "functionString": "deleteRole"
+                    }
+                ]                
+            },
+            {	
+                "id": "0-2",
+                "code": "0-2",
+                "name": "角色管理",
+                "menuIcon": "key",
+                "menuPath": "/role_list",                
+                "functions": [
+                    {
+                        "id": "0-2-F0",       
+                        "code": "0-2-F0",
+                        "name": "设置权限",
+                        "functionString": "placeholder0"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "1",
+        "code": "PROJECT",
+        "name": "项目监理",        
+        "moduleIcon": "eye-o",
+        "modulePath": "/index/project",
+        "menus": [
+            {
+                "id": "1-0",
+                "code": "1-0",
+                "name": "项目信息",
+                "menuIcon": "database",
+                "menuPath": "/project_list",
+                "functions": [
+                    {
+                        "id": "1-0-F0",
+                        "code": "1-0-F0",
+                        "name": "新增项目",
+                        "functionString": "addProject"
+                    },
+                    {
+                        "id": "1-0-F1",
+                        "code": "1-0-F1",
+                        "name": "修改项目",
+                        "functionString": "editProject"
+                    },
+                    {
+                        "id": "1-0-F2",
+                        "code": "1-0-F2",
+                        "name": "删除项目",
+                        "functionString": "deleteProject"
+                    },
+                    {  
+                        "id": "1-0-F3",
+                        "code": "1-0-F3",
+                        "name": "新增课题",
+                        "functionString": "addTopic"
+                    },
+                    {
+                        "id": "1-0-F4",
+                        "code": "1-0-F4",
+                        "name": "修改课题",
+                        "functionString": "editTopic"
+                    },
+                    {
+                        "id": "1-0-F5",
+                        "code": "1-0-F5",
+                        "name": "删除课题",
+                        "functionString": "deleteTopic"
+                    },
+                    {
+                        "id": "1-0-F6",
+                        "code": "1-0-F6",
+                        "name": "新增关键节点",
+                        "functionString": "addMilestone"
+                    },
+                    {
+                        "id": "1-0-F7",
+                        "code": "1-0-F7",
+                        "name": "修改关键节点",
+                        "functionString": "editMilestone"
+                    },
+                    {
+                        "id": "1-0-F8",
+                        "code": "1-0-F8",
+                        "name": "删除关键节点",
+                        "functionString": "deleteMilestone"
+                    },
+                    {
+                        "id": "1-0-F9",
+                        "code": "1-0-F9",
+                        "name": "查询项目",
+                        "functionString": "queryProjects"
+                    }
+                ]                
+            },
+            {
+                "id": "1-1",
+                "code": "1-1",
+                "name": "项目日志",
+                "menuIcon": "laptop",
+                "functions": [],
+                "children": [
+                    {                                             
+                        "id": "1-1-0",
+                        "code": "1-1-0",
+                        "name": "个人日志信息",
+                        "menuIcon": "tag-o",
+                        "menuPath": "/personnel_journals",
+                        "parentId": "1-1",
+                        "functions": [
+                            {
+                                "id": "1-1-0-F0",
+                                "code": "1-1-0-F0",
+                                "name": "新增个人项目日志",  
+                                "functionString": "addJournal"
+                            },
+                            {
+                                "id": "1-1-0-F1",
+                                "code": "1-1-0-F1",
+                                "name": "修改个人项目日志",
+                                "functionString": "editJournal"
+                            },
+                            {
+                                "id": "1-1-0-F2",
+                                "code": "1-1-0-F2",
+                                "name": "删除个人项目日志", 
+                                "functionString": "deleteJournal"
+                            }
+                        ]    
+                    },
+                    {                    
+                        "id": "1-1-1",         
+                        "code": "1-1-1",
+                        "name": "项目日志信息",
+                        "menuIcon": "tags",
+                        "menuPath": "/journal_list",
+                        "parentId": "1-1",
+                        "functions": [
+                            {
+                                "id": "1-1-1-F0",
+                                "code": "1-1-1-F0",
+                                "name": "查看项目日志",
+                                "functionString": "inspectJournal"
+                            }
+                        ]
+                    },
+                    {                     
+                        "id": "1-1-2",
+                        "code": "1-1-2",
+                        "name": "日志信息统计",
+                        "menuIcon": "line-chart",
+                        "menuPath": "/journal_statistics",
+                        "parentId": "1-1",
+                        "functions": [
+                            {
+                                "id": "1-1-2-F0",
+                                "code": "1-1-2-F0",
+                                "name": "项目日志统计信息",
+                                "functionString": "journalStatistics"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "code": "KNOWLEDGE",
+        "name": "知识库",
+        "moduleIcon": "global",
+        "modulePath": "/index/global",
+        "menus": [
+            {
+                "id": "4-0",
+                "code": "4-0",
+                "name": "国家标准规范",
+                "menuIcon": "book",
+                "menuPath": "/standard_list",
+                "functions": [
+                    {
+                        "id": "4-0-F0",
+                        "code": "4-0-F0",
+                        "name": "新增国家标准",
+                        "functionString": "addStandard"
+                    },
+                    {
+                        "id": "4-0-F1",
+                        "code": "4-0-F1",
+                        "name": "删除国家标准",
+                        "functionString": "deleteStandard"
+                    },
+                    {
+                        "id": "4-0-F2",
+                        "code": "4-0-F2",
+                        "name": "修改国家标准",
+                        "functionString": "editStandard"
+                    },
+                    {
+                        "id": "4-0-F3",
+                        "code": "4-0-F3",
+                        "name": "查询国家标准",
+                        "functionString": "queryStandards"
+                    }
+                ]
+            }
+        ]
+    }
+]

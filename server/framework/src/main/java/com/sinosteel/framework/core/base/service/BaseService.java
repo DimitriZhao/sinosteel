@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
@@ -17,7 +18,7 @@ import com.sinosteel.framework.system.basic.domain.User;
 import com.sinosteel.framework.utils.date.DateUtil;
 import com.sinosteel.framework.utils.string.StringUtil;
 
-@Transactional
+@Transactional(propagation = Propagation.REQUIRED, rollbackFor={Exception.class, RuntimeException.class})
 public class BaseService<T extends BaseEntity>
 {
 	public BaseRepository<T> baseRepository;

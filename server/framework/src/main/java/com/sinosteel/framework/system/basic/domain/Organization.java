@@ -8,7 +8,7 @@ import com.sinosteel.framework.helpers.hierarchy.domain.Hierarchy;
 
 @Entity
 @Table(name = "TBL_SYS_ORGANIZATION")
-public class Organization extends Hierarchy
+public class Organization extends Hierarchy<Organization>
 {
 	private static final long serialVersionUID = -2012132102143789528L;
 

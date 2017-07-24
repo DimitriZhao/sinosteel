@@ -1,26 +1,18 @@
 package com.sinosteel.framework.config.druid;
 
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 
 @Configuration
+@ConfigurationProperties(locations = "classpath:config/datasource.properties")
 public class DruidConfig 
-{
-	@Bean
-	@ConfigurationProperties(prefix="spring.datasource")
-	public DruidDataSource dataSource(DataSourceProperties properties)
-	{
-		return new DruidDataSource();
-	}
-	
+{	
 	@Bean
     public ServletRegistrationBean druidServlet()
 	{

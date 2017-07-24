@@ -18,7 +18,7 @@ import com.sinosteel.framework.system.basic.domain.Module;
 
 @Entity
 @Table(name = "TBL_SYS_MENU")
-public class Menu extends Hierarchy
+public class Menu extends Hierarchy<Menu>
 {
 	private static final long serialVersionUID = -2328400315682798977L;
 	

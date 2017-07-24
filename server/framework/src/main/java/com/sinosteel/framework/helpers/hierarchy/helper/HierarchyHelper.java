@@ -13,8 +13,7 @@ import com.sinosteel.framework.utils.string.StringUtil;
 
 public class HierarchyHelper
 {
-	@SuppressWarnings("unchecked")
-	public static <T extends Hierarchy> List<T> getHierarchiesBottomUp(List<T> nodes, HierarchyRepository<T> hierarchyRepository)
+	public static <T extends Hierarchy<T>> List<T> getHierarchiesBottomUp(List<T> nodes, HierarchyRepository<T> hierarchyRepository)
 	{
 		try
 		{
@@ -61,12 +60,12 @@ public class HierarchyHelper
 		}
 	}
 	
-	public static <T extends Hierarchy> List<T> getAllHierarchies(HierarchyRepository<T> hierarchyRepository)
+	public static <T extends Hierarchy<T>> List<T> getAllHierarchies(HierarchyRepository<T> hierarchyRepository)
 	{
 		return getHierarchies(hierarchyRepository, null);
 	}
 	
-	private static <T extends Hierarchy> List<T> getHierarchies(HierarchyRepository<T> hierarchyRepository, String parentId)
+	private static <T extends Hierarchy<T>> List<T> getHierarchies(HierarchyRepository<T> hierarchyRepository, String parentId)
 	{
 		List<T> hierarchies = hierarchyRepository.findByParentId(parentId);
 		
@@ -80,7 +79,7 @@ public class HierarchyHelper
 		return hierarchies;
 	}
 	
-	public static <T extends Hierarchy> List<String> getHierarchyIds(HierarchyRepository<T> hierarchyRepository, String parentId)
+	public static <T extends Hierarchy<T>> List<String> getHierarchyIds(HierarchyRepository<T> hierarchyRepository, String parentId)
 	{
 		List<String> hierarchyIds = new ArrayList<String>();
 		hierarchyIds.add(parentId);
@@ -96,7 +95,7 @@ public class HierarchyHelper
 	}
 	
 	@SuppressWarnings("unused")
-	private static <T extends Hierarchy> List<T> getHierarchies(List<T> allHierarchies, String parentId)
+	private static <T extends Hierarchy<T>> List<T> getHierarchies(List<T> allHierarchies, String parentId)
 	{
 		if(allHierarchies.size() == 0)
 		{
@@ -131,7 +130,7 @@ public class HierarchyHelper
 		}
 	}
 	
-	public static <T extends Hierarchy> T findHierarchyById(String id, List<T> hierarchies)
+	public static <T extends Hierarchy<T>> T findHierarchyById(String id, List<T> hierarchies)
 	{
 		for(T hierarchy : hierarchies)
 		{
@@ -144,8 +143,7 @@ public class HierarchyHelper
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static <T extends Hierarchy> JSONArray getHierarchiesJsonArray(List<T> hierarchies)
+	public static <T extends Hierarchy<T>> JSONArray getHierarchiesJsonArray(List<T> hierarchies)
 	{
 		SimplePropertyPreFilter filter = new SimplePropertyPreFilter();
 		filter.getExcludes().add("parent");
@@ -168,7 +166,7 @@ public class HierarchyHelper
 		return hierarchiesJsonArray;
 	}
 	
-	public static <T extends Hierarchy> void printHierarchies(List<T> hierarchies)
+	public static <T extends Hierarchy<T>> void printHierarchies(List<T> hierarchies)
 	{
 		for(T hierarchy : hierarchies)
 		{

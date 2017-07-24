@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sinosteel.framework.config.system.SystemConfig;
 import com.sinosteel.framework.core.base.service.BaseService;
 import com.sinosteel.framework.helpers.file.helper.FileHelper;
 import com.sinosteel.framework.helpers.pagination.PageResult;
@@ -26,8 +26,10 @@ import com.sinosteel.metallurgical.knowledge.repository.StandardResourceReposito
 @Service
 public class StandardService extends BaseService<Standard>
 {
-	@Value("${standardResourcePathHead}")
-	private String standardResourcePathHead;
+	@Autowired
+	private SystemConfig systemConfig;
+	
+	private final String standardResourcePathHead = systemConfig.getProperty("standardResourcePathHead");
 	
 	@Autowired
 	private StandardRepository standardRepository;

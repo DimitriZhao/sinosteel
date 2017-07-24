@@ -17,7 +17,7 @@ import com.sinosteel.framework.core.web.RequestArgumentResolver;
 public class WebConfig extends WebMvcConfigurerAdapter
 {
 	@Bean
-	RequestArgumentResolver requestArgumentResolver()
+	public RequestArgumentResolver requestArgumentResolver()
 	{
 		return new RequestArgumentResolver();
 	}
