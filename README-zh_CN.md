@@ -194,8 +194,8 @@ public Response queryStandards(Request request)
 `@RequiresAuthorization`的配置参数有：            
               
 * `requestType`：指明请求的种类，共四种，`RequestType.Query`, `RequestType.Add`, `RequestType.Delete`, `RequestType.Edit`；
-* `serviceClass`：指明实体所对应的Service类，例如对于Standard类来说，`serviceClass`就是`StandardService`；
-`queryScope, editScope, deleteScope`：分别指明对于某个实体类来说，查询，修改和删除的权限范围，取值都为以下4中之一：
+* `serviceClass`：指明实体所对应的Service类，例如对于Standard类来说，`serviceClass`就是`StandardService`；            
+* `queryScope, editScope, deleteScope`：分别指明对于某个实体类来说，查询，修改和删除的权限范围，取值都为以下4中之一：
     - `AuthorizationScope.ALL`：表示权限范围为所有信息    
     - `AuthorizationScope.ORGANIZATION`：表示权限范围为所在组织    
     - `AuthorizationScope.USER`：表示权限范围为用户   
@@ -203,13 +203,15 @@ public Response queryStandards(Request request)
                                
 例如，对于国家标准文件这个例子来说，实际的情况可能是这样，客户希望用户能够访问到所有组织所有人所添加的文件，并且修改和删除权限放宽至组织级别，即用户可以查到所有的国家标准文件，能够修改和删除所在组织的文件，不能修改和删除其它组织的文件。该情况下，对应的权限控制注解可写作如下形式：        
 
-`@RequiresAuthorization(`               
-        `requestType = RequestType.QUERY,`        
-        `serviceClass = UserService.class,`      
-        `queryScope = AuthorizationScope.ALL,`         
-        `editScope = AuthorizationScope.ORGANIZATION,`    
-        `deleteScope = AuthorizationScope.ORGANIZATION)`        
-`public Response queryStandards(Request request)`     
+```          
+@RequiresAuthorization(               
+        requestType = RequestType.QUERY,        
+        serviceClass = UserService.class,      
+        queryScope = AuthorizationScope.ALL,         
+        editScope = AuthorizationScope.ORGANIZATION,     
+        deleteScope = AuthorizationScope.ORGANIZATION)        
+public Response queryStandards(Request request)     
+```              
 
 至此，后端开发完毕，后端将发布相应的带有权限rest风格服务供前端调用          
                           
