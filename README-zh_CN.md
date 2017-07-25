@@ -245,7 +245,7 @@ https://github.com/davezuko
 import AddView from 'common/basic/components/AddView;        
 export default class StandardAddView extends AddView           
 {         
-...         
+    ...         
 }                    
 ```              
 
