@@ -127,70 +127,79 @@ Response中包含三个内容：status，data和message。status表示响应情�
 对于上述国家标准文件管理需求，则可以在knowledge.web中建立StandardController类，继承BaseController，即`public class StandardController extends BaseController`。
 一个新增标准文件的交互方法可以写成`public Response addStandard(Request request)`，一个查询标准文件的交互方法可以写成`public Response queryStandards(Request request)`。                
 
-在控制交互类中，可以进行功能和数据权限控制。功能权限采用的是apache shiro，采用shiro自带的注解`@RequiresPermissions`控制。系统的模块，菜单和功能可在src/resources/structure.json中进行配置。对于上述的国家标准文件的需求，可以定义为：  
-`{`                   
-`   "id": "4",`        
-`   "code": "KNOWLEDGE",`          
-`   "name": "知识库",`        
-`   "moduleIcon": "global",`               
-`   "modulePath": "/index/global",`            
-`   "menus": [`         
-`       {`           
-`           "id": "4-0",`       
-`           "code": "4-0",`      
-`           "name": "国家标准规范",`      
-`           "menuIcon": "book",`        
-`           "menuPath": "/standard_list",`       
-`           "functions": [`      
-`               {`    
-`                   "id": "4-0-F0",`         
-`                   "code": "4-0-F0",`      
-`                   "name": "新增国家标准",`      
-`                   "functionString": "addStandard"`      
-`               },`       
-`               {`               
-`                   "id": "4-0-F1",`              
-`                   "code": "4-0-F1",`           
-`                   "name": "删除国家标准",`              
-`                   "functionString": "deleteStandard"`          
-`               },`                  
-`               {`            
-`                   "id": "4-0-F2",`                
-`                   "code": "4-0-F2",`           
-`                   "name": "修改国家标准",`         
-`                   "functionString": "editStandard"`       
-`               },`            
-`               {`              
-`                   "id": "4-0-F3",`             
-`                   "code": "4-0-F3",`             
-`                   "name": "查询国家标准",`            
-`                   "functionString": "queryStandards"`       
-`               }`             
-`           ]`        
-`       }`          
-`   ]`            
-`}`                   
+在控制交互类中，可以进行功能和数据权限控制。功能权限采用的是apache shiro，采用shiro自带的注解`@RequiresPermissions`控制。系统的模块，菜单和功能可在src/resources/structure.json中进行配置。对于上述的国家标准文件的需求，可以定义为： 
+```             
+{                  
+    "id": "4",        
+    "code": "KNOWLEDGE",          
+    "name": "知识库",        
+    "moduleIcon": "global",               
+    "modulePath": "/index/global",            
+    "menus": [         
+        {           
+            "id": "4-0",       
+            "code": "4-0",      
+            "name": "国家标准规范",      
+            "menuIcon": "book",        
+            "menuPath": "/standard_list",      
+            "functions": [      
+                {    
+                    "id": "4-0-F0",         
+                    "code": "4-0-F0",      
+                    "name": "新增国家标准",      
+                    "functionString": "addStandard"      
+                },       
+                {               
+                    "id": "4-0-F1",              
+                    "code": "4-0-F1",           
+                    "name": "删除国家标准",              
+                    "functionString": "deleteStandard"          
+                },                  
+                {            
+                    "id": "4-0-F2",                
+                    "code": "4-0-F2",           
+                    "name": "修改国家标准",         
+                    "functionString": "editStandard"       
+                },            
+                {              
+                    "id": "4-0-F3",             
+                    "code": "4-0-F3",            
+                    "name": "查询国家标准",            
+                    "functionString": "queryStandards"       
+                }             
+            ]        
+        }          
+    ]            
+}   
+```                             
 
 模块，菜单和功能分别对应系统中的Module, Menu和Function类，其关系为：一个模块对应一或多个菜单，一个菜单对应0或多个功能。因此，对于上述的新增标准文件的功能，在配置好功能之后，若对其进行功能权限控制，可写成：  
 
-`@RequiresPermissions("addStandard")`     
-`public Response addStandard(Request request)`             
+```        
+@RequiresPermissions("addStandard")     
+public Response addStandard(Request request)           
+```            
 
 对于数据权限控制，框架提供了一个基于aop的注解`@RequiresAuthorization`，来为基本的CRUD开发提供方便的数据权限控制。在默认情况下，用户可查询，修改和删除自己所拥有的实体信息，可查询但不能修改或删除所在组织的实体信息，无法查询，修改和删除其它组织的实体信息。例如，对于上述的查询标准文件功能，可写作如下形式：
 
-`@RequiresAuthorization(requestType = RequestType.QUERY, serviceClass = StandardService.class)`   
-`public Response queryStandards(Request request)`               
+```               
+@RequiresAuthorization(                 
+    requestType = RequestType.QUERY,                 
+    serviceClass = StandardService.class)   
+public Response queryStandards(Request request)          
+```                      
 
 这表明，用户在查询国家标准文件的时候，可以查到所在组织中所有人之前所添加的国家标准文件信息，可以修改或删除自己之前添加的国家标准文件信息，但不能删除或修改所在组织其他人之前所添加的国家标准文件信息。此外，对于其它组织的其他人之前所添加的国家标准文件信息，该用户查不到，也无法修改或删除。    
 
-`@RequiresAuthorization`的配置参数有：
-`requestType`：指明请求的种类，共四种，`RequestType.Query`, `RequestType.Add`, `RequestType.Delete`, `RequestType.Edit`；
-`serviceClass`：指明实体所对应的Service类，例如对于Standard类来说，`serviceClass`就是`StandardService`；
+`@RequiresAuthorization`的配置参数有：            
+              
+* `requestType`：指明请求的种类，共四种，`RequestType.Query`, `RequestType.Add`, `RequestType.Delete`, `RequestType.Edit`；
+* `serviceClass`：指明实体所对应的Service类，例如对于Standard类来说，`serviceClass`就是`StandardService`；
 `queryScope, editScope, deleteScope`：分别指明对于某个实体类来说，查询，修改和删除的权限范围，取值都为以下4中之一：
-    `AuthorizationScope.ALL`：表示权限范围为所有信息    
-    `AuthorizationScope.ORGANIZATION`：表示权限范围为所在组织    
-    `AuthorizationScope.USER`：表示权限范围为用户   
-    `AuthorizationScope.NONE`：表示没有任何权限              
+    - `AuthorizationScope.ALL`：表示权限范围为所有信息    
+    - `AuthorizationScope.ORGANIZATION`：表示权限范围为所在组织    
+    - `AuthorizationScope.USER`：表示权限范围为用户   
+    - `AuthorizationScope.NONE`：表示没有任何权限              
                                
 例如，对于国家标准文件这个例子来说，实际的情况可能是这样，客户希望用户能够访问到所有组织所有人所添加的文件，并且修改和删除权限放宽至组织级别，即用户可以查到所有的国家标准文件，能够修改和删除所在组织的文件，不能修改和删除其它组织的文件。该情况下，对应的权限控制注解可写作如下形式：        
 
