@@ -93,7 +93,7 @@ $ npm run build
 生成的文件位于 dist 文件夹中, 可在nginx中部署                  
 
 # 开发指南
-如何使用框架开发，请参考<a href="https://github.com/DimitriZhao/sinosteel/blob/master/README-zh_CN.md">开发指南</a>
+如何使用框架开发，请参考<a href="https://github.com/DimitriZhao/sinosteel/blob/master/README-Dev_Guide.md">开发指南</a>
 
 # 项目引用                 
 https://github.com/bodyno/react-starter-kit               
