@@ -226,25 +226,28 @@ https://github.com/davezuko
 文件结构和上述引用的脚手架一致，即页面部分都在`src/routes`中完成。和上文中提到的服务端类似，`src/routes`下的文件夹按照业务模块来进行划分，这是个人比较习惯的一种方式。     
 
 ### 开发步骤                
-对于基本的CRUD的页面，基本的元素可以简单分为：列表，搜索栏，新增页面，修改页面，查看页面。框架结合redux，将这些元素抽象成了一些公共页面，使开发无需关心如何设置redux的store，state，分页，样式等等，只需要继承这些公共页面即可完成基本CRUD开发。框架所抽象的公共页面元素位于`src/common/basic`中，包括：             
-AddView：框架抽象的公共新增页面                 
-EditView：框架抽象的公共修改页面              
-InspectView：框架抽象的公共查看页面             
-ListComponent：框架抽象的公共数据列表组件               
-SearchComponent：框架抽象的公共搜索栏组件              
-OperationComponent：框架抽象的公共操作栏组件               
-ListView：由ListComponent，SearchComponent和OperationComponent组合而成的公共列表页面。                  
+对于基本的CRUD的页面，基本的元素可以简单分为：列表，搜索栏，新增页面，修改页面，查看页面。框架结合redux，将这些元素抽象成了一些公共页面，使开发无需关心如何设置redux的store，state，分页，样式等等，只需要继承这些公共页面即可完成基本CRUD开发。框架所抽象的公共页面元素位于`src/common/basic`中，包括：  
+
+* AddView：框架抽象的公共新增页面                 
+* EditView：框架抽象的公共修改页面              
+* InspectView：框架抽象的公共查看页面             
+* ListComponent：框架抽象的公共数据列表组件               
+* SearchComponent：框架抽象的公共搜索栏组件              
+* OperationComponent：框架抽象的公共操作栏组件               
+* ListView：由ListComponent，SearchComponent和OperationComponent组合而成的公共列表页面。                  
 
 以下以上述国家标准文件管理需求为例来进行开发，首先，在`src/routes`下建立文件夹`knowledge`，在文件夹中新建`StandardAddView.js，StandardEditView.js，StandardInspectView.js，StandardListComponent.js，StandardSearchComponent.js，StandardListView.js`。事实上，这些新建的文件和上述的抽象公共页面是一一对应的。   
 
 #### 新增页面（AddView）               
 `StandardAddView`表示新增国家标准文件的页面，可将它定义为一个类，并继承AddView，即：       
 
-`import AddView from 'common/basic/components/AddView';`        
-`export default class StandardAddView extends AddView`           
-`{`          
-`   ...`         
-`}`                    
+```
+import AddView from 'common/basic/components/AddView;        
+export default class StandardAddView extends AddView           
+{         
+...         
+}                    
+```              
 
 具体写法可参照framework-webclient          
 
