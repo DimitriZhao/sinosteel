@@ -12,7 +12,15 @@
 密码：admin     
 
 该地址所演示的是一个实际项目，用于北京国冶锐城公司，目前处于测试阶段
-
+             
+# 项目截图       
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/framework0.png" />      
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/framework1.png" />  
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/framework2.png" />  
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/framework3.png" />  
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/framework4.png" />       
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/framework5.png" />   
+                          
 # 项目特点
 ## 服务端：
 服务端/客户端完全分离       
@@ -236,7 +244,7 @@ public Response queryStandards(Request request)
 public Response queryStandards(Request request)     
 ```              
 
-至此，后端开发完毕，后端将发布相应的带有权限rest风格服务供前端调用          
+至此，后端开发完毕，后端将发布相应的带有权限控制的rest风格服务供前端调用          
                           
 ## 客户端               
 ### 文件结构              
@@ -296,7 +304,11 @@ export default class StandardAddView extends AddView
 
 对于继承了AddView的类（在这里就是StandardAddView），需要给类属型`addPath`赋值，`addPath`是用于处理新增请求的后端服务路径      
 
-AddView由一个表单和一个提交按钮组成。在AddView基类中有两个重要方法：      
+AddView由一个表单和一个提交按钮组成，如下图所示：        
+             
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/AddView.png" />   
+
+在AddView基类中有两个重要方法：      
 
 * `handleValues(values)`的作用是在表单将数据传给服务端之前，对数据进行处理。`values`为一个包含了表单所要提交的数据的object，在用户点击提交按钮后生成，`values`会在经过`handleValues`处理后提交给后端。`handleValues`函数的具体逻辑可以自行定义。            
 * `renderForm(formItems, function(addButton))`的作用是渲染表单，其中，formItems为表单项的数组，可参考antd的官方例子。function(addButton)为处理addButton的函数，例如可以调整addButton的位置等。        
@@ -316,7 +328,11 @@ export default class StandardEditView extends EditView
 
 和AddView一样，对于继承了EditView的类（在这里就是StandardEditView），需要给类属型`editPath`赋值，`editPath`是用于处理修改请求的后端服务路径      
 
-EditView也由一个表单和一个提交按钮组成，但与AddView不同的是，既然是修改，那么所有的表单项都是有初始值的。在EditView基类中有三个重要的方法，其中`handleValues(values)`和`renderForm(formItems, function(editButton))`和AddView中的如出一辙，而第三个方法`handleInitValues(initValues)`则是用于在给表单项赋初始值之前，对初始值进行处理。其中，`initValues`为一个包含了表单所有项的初始值的object，在经过`handleInitValues`处理后会赋值给所有表单项。`handleInitValues`的逻辑可以自行定义。   
+EditView也由一个表单和一个提交按钮组成，如下图所示：         
+              
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/EditView.png" />   
+
+但与AddView不同的是，既然是修改，那么所有的表单项都是有初始值的。在EditView基类中有三个重要的方法，其中`handleValues(values)`和`renderForm(formItems, function(editButton))`和AddView中的如出一辙，而第三个方法`handleInitValues(initValues)`则是用于在给表单项赋初始值之前，对初始值进行处理。其中，`initValues`为一个包含了表单所有项的初始值的object，在经过`handleInitValues`处理后会赋值给所有表单项。`handleInitValues`的逻辑可以自行定义。   
 
 #### 查看页面（InspectView）                 
 `StandardInspectView`表示查看国家标准文件的页面，和前两者一样，需要定义为一个类并继承InspectView，即：      
@@ -331,7 +347,11 @@ export default class StandardInspectView extends InspectView
               
 具体写法可参照framework-webclient                 
 
-InspectView仅有一个赋有初始值且不能进行修改的表单，因而和前两者相比，处理相对简单一些。既然是查看，那么表单同样是有初始值的。和EditView不同的是，InspectView中的所有值是在`this.props.item`里面的，对其进行操作即可。此外，InspectView基类中同样提供了`renderForm(formItems)`方法，由于没有按钮所以没有第二个参数，仅需要对`formItems`进行操作即可。             
+InspectView仅有一个赋有初始值且不能进行修改的表单，如下图所示：     
+              
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/InspectView.png" />   
+
+因而，和前两者相比，处理相对简单一些。既然是查看，那么表单同样是有初始值的。和EditView不同的是，InspectView中的所有值是在`this.props.item`里面的，对其进行操作即可。此外，InspectView基类中同样提供了`renderForm(formItems)`方法，由于没有按钮所以没有第二个参数，仅需要对`formItems`进行操作即可。             
 
 #### 数据列表组件（ListComponent)                       
 `StandardListComponent`    即为国家标准文件的列表，和之前一样，需要定义为一个类并继承ListComponent，即：        
@@ -345,6 +365,10 @@ export default class StandardListComponent extends ListComponent
 ```              
             
 具体写法可参照framework-webclient         
+                
+公共列表组件如下图所示：            
+                     
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/ListComponent.png" />   
 
 公共数据列表ListComponent中已经包含了分页，数据传递，数据权限控制等等，同时无需手动render，因此只需给继承的类属型赋值即可，这些类属型如下：         
 
@@ -368,6 +392,10 @@ export default class StandardSearchComponent extends SearchComponent
             
 具体写法可参照framework-webclient      
 
+公共搜索栏组件如下图所示：                 
+                
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/SearchComponent.png" />   
+
 和上述的AddView的写法一样，SearchComponent由一个表单和一个搜索提交按钮组成，需要给基类的类属性`queryPath`赋值，表示后端的搜索请求路径，并指定formItems然后使用基类的`renderForm(formItems)`来渲染表单，用法也和上述的AddView相同，这里不再赘述。       
 
 #### 公共操作栏组件（OperationComponent）               
@@ -381,7 +409,11 @@ export default class StandardOperationComponent extends OperationComponent
 }                    
 ```              
             
-具体写法可参照framework-webclient                 
+具体写法可参照framework-webclient     
+
+公共操作栏组件如下图所示：                 
+                 
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/OperationComponent.png" />   
 
 其写法比InspectView还要简单，只需要指定以下属性的值即可：     
 
@@ -400,7 +432,11 @@ export default class StandardListView extends ListView
 }                    
 ```              
             
-具体写法可参照framework-webclient             
+具体写法可参照framework-webclient          
+
+公共列表页面如下图所示，同时可以看出，它是一个组合了搜索栏，操作栏和列表组件的页面：                
+                  
+<img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/ListView.png" />   
 
 可能会有这样的疑问：既然是组合了其它三个组件，为什么还要分开写，写成一个组件不行吗？这是因为我个人出于一定的灵活性考虑，首先，保不齐其他地方也需要列表组件，那么之前所写的ListComponent是可以被复用的。其次，有时候页面可能不需要搜索栏或者操作栏，那么在目前这种情况下，ListView是能够自由组合的：如果不需要，就直接不写就可以了（默认为null，基类的render机制是当定义为null的时候则不进行渲染）。    
 
@@ -430,4 +466,4 @@ export default class StandardListView extends ListView
 https://github.com/bodyno/react-starter-kit               
 https://github.com/davezuko/react-redux-starter-kit                
 
-<em>在此表示感谢</em>             
+**在此表示感谢***           
