@@ -30,7 +30,7 @@ https://github.com/davezuko
 
 好在对于这个项目来说，脚手架不是重点。和服务端一样，这个客户端的框架主要提供一个基本CRUD的快速开发，就好比服务端如果换成spring mvc也是照样能用的一样，只要把前端的`src/routes`下面的东西拷到新的脚手架，再配置配置，也是一样能用的              
 
-之后的话，会把前端的项目用create-react-app（facebook的官方脚手架）或dvajs<del>我喜欢孙dva</del>（antd的官方脚手架）重构下，待老夫先学习一下。。。然后，为什么貌似dvajs好久没更新了<del>我们也爱dva呦</del>。。。
+之后的话，会把前端的项目用<a href="https://github.com/facebookincubator/create-react-app">create-react-app</a>（facebook的官方脚手架）或<a href="https://github.com/dvajs/dva">dvajs</a><del>我喜欢孙dva</del>（antd的官方脚手架）重构下，待老夫先学习一下。。。然后，为什么貌似dvajs好久没更新了<del>我们也爱dva呦</del>。。。
                  
 接下来以服务端和客户端进行分述             
                     
