@@ -65,13 +65,21 @@ react + ant design + react-redux-router + redux-thunk + webpack + nginx
 
 运行服务端：
 
+首先，安装MySql数据库，端口号设为3306，用户名为root，密码为空     
+其次，安装redis，端口号设为6379，用户名和密码都为空         
+(以上两步，如果已经安装了MySql或者redis，或者设置不同的话，可以直接到framework-example/src/main/resources/config中找到对应的配置文件修改配置。既然都已经安装了数据库和redis，说明肯定是会后端的配置了的~)                  
+然后，创建framework数据库，并导入framework.sql         
+最后，运行以下命令（在有IDE的情况下就直接import一个maven工程就好）      
+                     
 ```             
 $ cd framework-example               
 $ mvn package              
 $ cd framework-example/target               
 $ java -jar framework-example-1.0.0.jar       
-```                      
+```               
 
+服务端将在9016端口上运行             
+                   
 ## 客户端:
 “client” 文件夹是一个可在nodejs环境下运行的react项目 
 
@@ -81,8 +89,10 @@ $ java -jar framework-example-1.0.0.jar
 $ cd framework-webclient
 $ npm install             
 $ npm run dev            
-```                   
-
+```           
+               
+客户端将在3000端口上运行，访问localhost:3000即可看到登录界面                  
+                
 部署生产环境:  
 
 ```                  
@@ -97,7 +107,7 @@ $ npm run build
 如何使用框架开发，请参考<a href="https://github.com/DimitriZhao/sinosteel/blob/master/README-Dev_Guide.md">开发指南</a>
 
 # 项目引用                 
-https://github.com/bodyno/react-starter-kit               
+https://github.com/OwlAford/easy-react-desktop                          
 https://github.com/davezuko/react-redux-starter-kit                
 
 **在此表示感谢！**        
