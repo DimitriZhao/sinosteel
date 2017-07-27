@@ -1,8 +1,6 @@
 # 设计思路
 这里来说下个人对于这个框架和项目的各个方面一个设计思路，不定期更新，想到什么就写什么，欢迎讨论，批评和指正。       
-                                      
-下文中同样引用<a href="https://github.com/DimitriZhao/sinosteel/blob/master/README-Dev_Guide.md">开发指南</a>中的管理国家标准规范文件的例子来进行一定的叙述，即对于公司收录的国家标准文件需要进行基本的增删改查操作，则需要定义标准文件的相关模型和服务，这个也是framework-example中的例子，可参考framework-example中的代码                  
-                        
+                
 ## 综述
 可以想象如下场景：假设你在一家创业公司，公司里面只有你一个架构师。老板为了省钱，招的其它人都是刚毕业的大学生，体力好能干活有热情<del>会暖床</del>，但没法独立构建项目，也不会考虑代码解耦什么的，他们的任务仅仅是使用框架来写业务逻辑。因此，你所开发的框架，就需要做到能够快速地构建新项目以便于接活，能够让开发者尽可能地专注于业务逻辑以便于节省开发成本，尽可能地封装常用的功能以便于快速开发，这样公司才能赚更多的钱，你也能升职加薪，并且那些小同学们在开发的时候才会称赞你这个架构师很imba而不是在心里默念一句mmp。     
                
@@ -15,7 +13,7 @@
                               
 * 前端的话有ng2, react和vue可以选。为什么选了react了呢<del>我才不会说我是因为看上了antd的UI了呢</del>？因为ng2出的时间不长，需要进一步<del>暗中</del>观察，vue的生态圈相比于react来说小了些，所以就选了react。一开始这三个我都试过，个人感觉更喜欢react和vue的写法，而且貌似react和vue的技术栈也差不多。但实际上，UI也是个很重要的问题。个人入react坑有很大原因是因为ant design。对于刚入坑的开发<del>玩家</del>，尤其是后端开发来说，自然是喜欢有一整套漂亮的可靠的UI，这样就能轻松地开发出一个美观的app，不然的话都像一开始学web开发的时候写什么`<input id="username" name="username" type="text" />`之类的，做出来的页面就俩输入框，然后一看“卧槽我学半天就写出来这么个丑东西”从而大受打击，再之后调css还要调半天简直心塞。而ant design的文档非常详细，用户基数也大，所以就不怕踩坑，同时因为它是阿里的官方项目因此不像个人项目哪天他老婆心情不好就放着bug坑了。                
                                      
-前端的脚手架用的是
+前端的脚手架用的是：          
 
 https://github.com/OwlAford/easy-react-desktop   
 https://github.com/davezuko/react-redux-starter-kit    
@@ -35,5 +33,184 @@ https://github.com/davezuko
 接下来以服务端和客户端进行分述             
                     
 ## 服务端
+框架主要处理了服务端的以下部分：
 
-  
+* Http消息机制               
+* 基础CRUD            
+* 权限控制              
+* 文件上传             
+              
+以下按照上述列表内容进行分述                 
+              
+### Http消息机制
+但凡写过spring mvc的同志们对controller的这种写法一定不陌生：   
+                 
+```
+@RequestMapping("/test")
+public ModelAndView test(@RequestParam(value = "arg")String arg)
+```
+               
+假如说用spring mvc发布RESTful服务，就是这样：          
+                  
+```
+@RequestMapping("/test")
+@ResponseBody
+public JSONArray test(@RequestParam(value = "arg")String arg)
+```
+                                
+spring这样做是为了给广大用户足够的自由度。可是在实际开发中，对于Http消息的传递，一般是对参数和返回值有所规定的，不能想发什么就发什么，想返回什么就返回什么，因为当因需求改动而改代码的时候，会造成一定的不便。比如，一开始的时候，有一个“查询商品”的需求，搜索条件为商品号，商品名称，那么按照上面的写法，可以写成：      
+                                     
+```
+@RequestMapping("/queryProducts")
+@ResponseBody
+public JSONArray queryProducts(
+    @RequestParam(value = "productCode")String productCode,
+    @RequestParam(value = "productName")String productName)
+{
+    JSONArray productsJsonArray = productService.queryProducts(productCode, productName);
+    return productsJsonArray;
+} 
+```
+                   
+然后有一天很不幸，客户说，啊呀我们领导说还想根据商品的发售日期来搜索，并且不仅能搜到基本的商品信息，还能搜到这些商品的销售总额占所有商品的百分比？哎呀领导比较关心财务嘛我们也没有办法啦。。。得，这下controller里搜索条件多了一个，返回也不能只返回个JSONArray，还得返回一个百分比，不仅如此，service也得改。于是乎程序就改成这样：      
+                  
+```
+@RequestMapping("/queryProducts")
+@ResponseBody
+public JSONObject queryProducts(
+    @RequestParam(value = "productCode")String productCode,
+    @RequestParam(value = "productCode")String productName,
+    @RequestParam(value = "salesDate")String salesDate)
+{
+    JSONObject productsJson = productService.queryProducts(productCode, productName, salesDate);
+    return productsJson; 
+}
+```
+
+先说一下，个人在不是必要的情况下，会一律使用String类型来表示日期。为什么？这是被该需求坑出来的。。。              
+                 
+然后回到上面的话题，用户改了个需求，于是导致controller和service中相应的函数的参数和返回值都要改（什么你说你在controller里写业务逻辑？厉害了我的哥。。。）。实质上，这个需求涉及到的仅仅是业务逻辑，应该是service层负责的事情。controller负责的事情应该是Http消息的传输，所以道理上来说，controller是不应该发生改变的。     
+              
+所以，框架封装了Http消息的请求`Request`类和返回`Response`类。所有的Http请求都会被解析为Request类的实例，而对于基本的返回类型（String啦JSON啦之类的），则一律定义成Response类实例，即controller中基本的交互方法都可以写成：     
+                
+```
+@RequestMapping("自定义的路径")
+@ResponseBody
+public Response doSomething(Request request)
+```
+                  
+`Request`和`Response`的定义可在framework中的com.sinosteel.framework.core.web中找到。
+                
+查看`Request`类可得知，前端发送的用户信息会被解析至`user`（类型为com.sinosteel.framework.system.basic.domain.User）中，所有的参数会被解析至`params`（类型为com.alibaba.fastjson.JSONObject）中，所有上传的文件会被解析至`files`（类型为org.springframework.web.multipart.MultipartFile）中。其他信息可参考Request类的定义。                   
+                      
+在`Response`类中，`status`表示后端处理是否成功；`data`表示后端的返回值，类型为com.alibaba.fastjson.JSON，也就是说，可以是JSONObject，也可以是JSONArray；`message`表示后端返回的额外信息，可以用于向前端返回异常信息等<del>不过因为我犯懒了所以这个异常处理机制没有做。。。</del>           
+                    
+因此，对于上述的例子，controller里可以这么写：
+               
+```
+@RequestMapping("/queryProducts")
+@ResponseBody
+public Response queryProducts(Request request)
+{
+    Response response = new Response();
+
+    try
+    {
+        response.status = ResponseType.SUCCESS;
+        response.data = productService.queryProducts(request.getParams(), request.getUser());
+    }
+    catch(Exception e)
+    {
+        response.status = ResponseType.FAILURE;
+        response.message = e.message;
+    }
+
+    return response;
+}
+```
+                       
+当上述例子中的需求改动出现的时候，可以看出来controller是不需要改的，只要改动service即可              
+
+具体的解析机制在framework中的com.sinosteel.framework.core.web.RequestArgumentResolver中，配置在framework中的com.sinosteel.framework.config.web.WebConfig中    
+              
+当然，这种封装对前端发送的请求是有要求的，前端请求的参数需按如下设置：        
+            
+* username：用户名，存于客户端的localStorage，不可为空          
+* clientDigest：消息摘要，用于验证用户身份，存于客户端的localStorage（当然，想要存到cookie里也行），不可为空            
+* params：请求参数组成的js object。可为空          
+* files：前端上传的文件信息，可为空              
+                      
+可参考前端工程framework-webclient中src/utils/FetchUtil.js的写法。如果是文件上传的话，需要使用H5的FormData，普通的请求可以直接用JSON。   
+
+个人认为，为了规范消息传递，便于代码修改，这些限制是有必要的，不然的话前端今天传个int，明天传个String，后端就得跟着改。这是框架封装消息机制的初衷。   
+                
+对于返回信息来说，不一定必须使用Response（但基本的消息传递最好使用）。比如文件下载，二进制流之类的，可以使用spring自带的ResponseEntity来完成。<del>好吧由于目前没这个需求导致我又懒了只做了文件下载没做其它的。。。</del>
+                    
+### 基础CRUD
+基本的CRUD早在老SSH（spring，struts，hibernate）的年代就有了，很多框架会有比如BaseEntity，BaseDao，BaseService之类的。当然，这个框架也不例外，同样定义了这些base实体和基础CRUD。框架使用的jpa实现是基于hibernate的spring data jpa，不过同时也整合了mybatis（以前还叫ibatis的啊，岁月啊。。。），也就是说，框架是有两个orm共存的，可以同时使用。这是为了不同需求而考虑的，对于范式设计（当然，也可以不那么范式，应该说是实体类映射的表，或者通俗点说就是纵表），可以采用spring data jpa来进行数据库操作，而对于反范式设计（比如横表）或是复杂查询，使用mybatis会更为容易一些。比如有这么个情况，一个图书借阅系统，一个学生可以借多本书，一本书也可以在不同时段被多个人借，数据库需要存借阅信息。那么根据以上需求，可以设计成：    
+                  
+```
+/**
+* 图书
+*/
+@Entity
+@Table(name = "TBL_BOOK")
+public class Book
+{
+    @Id
+    @GeneratedValue(generator = "uuid") 
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(name = "BOOK_ID")
+    private String bookId;
+
+    @Column(name = "BOOK_NAME")
+    private String bookName;
+
+    @OneToMany
+    @JoinColumn(name = "BOOK_ID", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    private List<Borrow> borrows; //借书记录，不要吐槽动词加了s。。。
+}
+
+/**
+* 学生
+*/
+@Entity
+@Table(name = "TBL_STUDENT")
+public class Student
+{
+    @Id
+    @GeneratedValue(generator = "uuid") 
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(name = "STUDENT_ID")
+    private String studentId;
+
+    @Column(name = "studentName")
+    private String studentName;
+
+    @OneToMany
+    @JoinColumn(name = "STUDENT_ID", foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+    private List<Borrow> borrows; //借书记录，不要吐槽动词加了s。。。
+}
+
+/**
+* 借阅记录
+*/
+@Entity
+@Table(name = "TBL_BORROW")
+public class Borrow
+{
+    @Id
+    @GeneratedValue(generator = "uuid") 
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(name = "BORROW_ID")
+    private String borrowId;
+
+    @Column(name = "BORROW_DATE")
+    private String borrowDate;
+
+    @Column(name = "EXPECTED_RETURN_DATE")
+    private String expectedReturnDate;
+
+    @Column(name = "ACTUAL_RETURN_DATE")
+    private String actualReturnDate;
+}

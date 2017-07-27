@@ -3,6 +3,7 @@ package com.sinosteel.framework.core.base.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -16,6 +17,7 @@ public class BaseEntity implements Serializable
 	private static final long serialVersionUID = -7334806723394863536L;
 
 	@Id
+	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid")
 	@Column(name = "ID")
 	private String id;
