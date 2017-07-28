@@ -148,7 +148,9 @@ public Response queryProducts(Request request)
                     
 ### 基础CRUD
 基本的CRUD早在老SSH（spring，struts，hibernate）的年代就有了，很多框架会有比如BaseEntity，BaseDao，BaseService之类的。当然，这个框架也不例外，同样定义了这些base实体和基础CRUD。框架使用的jpa实现是基于hibernate的spring data jpa，不过同时也整合了mybatis（以前还叫ibatis的啊，岁月啊。。。），也就是说，框架是有两个orm共存的，可以同时使用。这是为了不同需求而考虑的，对于范式设计（当然，也可以不那么范式，应该说是实体类映射的表，或者通俗点说就是纵表），可以采用spring data jpa来进行数据库操作，而对于反范式设计（比如横表）或是复杂查询，使用mybatis会更为容易一些。比如有这么个情况，一个图书借阅系统，一个学生可以借多本书，一本书也可以在不同时段被多个学生借（当然，在一本书正在被借阅的时候，其它人是不能借阅的），数据库需要存借阅信息。那么根据以上需求，可以设计成如下样子：    
-                  
+
+**注：以下是范式设计，实际项目一般不会设计得这么范式。比如图书Book类，一般会加个字段表明是否正在被借阅（不然按照下面的纯范式设计的话，类似于“查询所有正在被借阅的图书”等类似的需求会要人命的）**
+                                       
 ```
 /**
 * 图书
@@ -218,7 +220,7 @@ public class Borrow
 }
 ```
                                                 
-关于hibernate和mybatis之争也是历史悠久了，hibernate作为老牌orm，jpa规范的实现，有着诸多优点。然而当前很多互联网公司用的是ssm整合的框架（spring, springmvc, mybatis），因为互联网应用的数据库为了性能所以反范式设计较多。个人认为，应该先去了解两个orm各自的优势和局限，再根据实际的业务需求来做出选择。如果业务能够抽象成实体类来进行逻辑编写的，比如这个图书管理的例子，是可以抽象出来相关业务实体的，那就应该使用jpa，而不是盲目跟风用mybatis，比如如果添加一本图书的话：      
+关于hibernate和mybatis之争也是历史悠久了，hibernate作为老牌orm，jpa规范的实现，有着诸多优点。然而当前也有很多互联网公司用的是ssm整合的框架（spring, springmvc, mybatis）。个人认为，应该先去了解两个orm各自的优势和局限，再根据实际的业务需求来做出选择。如果业务能够抽象成实体类来进行逻辑编写的，比如这个图书管理的例子，是可以抽象出来相关业务实体的，那就应该使用jpa，而不是盲目跟风用mybatis，比如如果添加一本图书的话：      
              
 jpa：saveEntity，没了
 mybatis：首先配在mapper里面配置实体类的映射，然后写<insert>标签里面写`INSERT INTO TBL_BOOK......`         
@@ -226,25 +228,16 @@ mybatis：首先配在mapper里面配置实体类的映射，然后写<insert>�
 这还不算，假如这时候客户说了“啊呀图书的话我们还需要加个图书的出版日期”，于是乎，实体类就得加一条`private String issueDate`，这时：
                
 jpa：还是saveEntity，只要改实体类的定义就完事了            
-mybatis：首先改实体类Book，然后在mapper中添加新字段的映射，然后再改掉之前写的<inset>                    
+mybatis：首先改实体类Book，然后在mapper中添加新字段的映射，然后再改掉之前写的<insert>                    
              
-用过mybatis的应该知道这是挺烦人的事情。这还是简单的例子，而诸如像一对多，多对多的实体类设计的话，改起来那真是要人命。当然如果用spring boot结合mybatis-spring-boot-starter的话，倒是不用配置实体类映射了，但是sql的修改是不可避免的。实际上我个人觉得道理也很简单，既然都能抽象出业务实体了，就说明一定能够契合jpa规范，干嘛不用正确的工具呢？基本的增删改和**不复杂**的查询，jpa实现起来就是比mybatis要容易方便。我见过有做传统企业应用的公司的框架，一大堆业务实体类，用hibernate好好地然后非改成mybatis，我觉得，这不够理智。。。（什么你说你们公司根本不定义实体类？那建议直接上jdbcTemplate。。。）      
+用过mybatis的应该知道这是挺烦人的事情。这还是简单的例子，而诸如像一对多，多对多的实体类设计的话，改起来那真是要人命。当然如果用spring boot结合mybatis-spring-boot-starter的话，倒是不用配置实体类映射了，但是sql的修改是不可避免的。实际上我个人觉得道理也很简单，既然都能抽象出
+**不复杂的**
+业务实体了，就说明一定能够契合jpa规范，那么jpa实现起来就是比mybatis要容易方便，所以在不是极致追求效率的情况下，干嘛不用更合适的工具呢？（什么你说你们公司根本不定义实体类？那建议直接上jdbcTemplate，但是你们真的一个实体类都不定义嘛你确定嘛。。。）      
                     
-mybatis这么流行当然不是没有原因的，跟jpa相比，个人认为最大的区别恐怕就是其不囿于jpa，给开发者提供了足够的灵活性了。还是刚才图书管理的例子，比如查询所有图书的话：            
+mybatis这么流行当然不是没有原因的，跟jpa相比，个人认为最大的区别恐怕就是其不囿于jpa，给开发者提供了足够的灵活性了，同时能够进行手动sql调优。当数据表是反范式设计的时候，比如可能大多数人都见过的例子：一个工单表有100左右个字段这种，还别说这还真是业务实体，然而过于庞大。我见过的解决方案是jpa只做部分字段的映射，其余交给sql语句。但是这样的话，jpa所能做到的事情就很有限，比如根据一个没被映射的字段来返回实体，这就很糟心了，因为hql就写不了了，而写sql的话，返回值要自己一个一个去映射，但是mybatis就不存在这样的问题。此外，如果根本不能抽象成业务实体，比如举个工控的例子，同一时间所有PLC点位的数值存储是个横表，也就是是说这么设计的：    
                   
-jpa：queryAll，没了             
-mybatis：写<select>，sql语句搞定       
-
-看似还是jpa更容易一些，这也是前边为什么强调“不复杂”的查询，但是对于复杂的查询，比如，查询用户“小明”所借阅过的所有书籍名称：        
-                 
-jpa：对于复杂的查询，jpa就得上hql了。这个hql可以写成：        
-    ```                   
-    SELECT book.bookName FROM Book book WHERE book.bookId IN 
-        (SELECT borrow.bookId FROM Borrow borrow WHERE borrow.studentId IN 
-            (SELECT student.studentId FROM Student student 
-                WHERE student.studentName = '小明'))
-    ```    
-
-
-                  
-
+ID，TIME, VALUE1, VALUE2，VALUE3......            
+               
+当然这也可以做成纵表，这么做的人坟头草都已经两丈高了，都是被后来写各种join给累死的。。。。。。     
+               
+在这种根本不符合jpa的情况下，显然mybatis或jdbcTemplate更为合适
