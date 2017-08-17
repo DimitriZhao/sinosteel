@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
@@ -115,9 +113,17 @@ public class FunctionService extends BaseService<Function>
 	
 	public void syncStructure() throws Exception
 	{
-		Resource resource = new ClassPathResource("structure.json");
-		File structureFile = resource.getFile();
-		InputStreamReader reader = new InputStreamReader(new FileInputStream(structureFile));
+		File structureFile = new File("src/main/resources/structure.json");
+		InputStreamReader reader = null;
+		
+		if(!structureFile.exists())
+		{
+			reader = new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("structure.json"));
+		}
+		else
+		{
+			reader = new InputStreamReader(new FileInputStream(structureFile));
+		}
 		
 		StringBuilder jsonStringBuilder = new StringBuilder("");
 		int readChar = 0;
@@ -130,7 +136,7 @@ public class FunctionService extends BaseService<Function>
 		String jsonString = jsonStringBuilder.toString();
 		JSONArray modulesJsonArray = JSONArray.parseArray(jsonString);
 		List<Module> modulesConfig = JsonUtil.toObjects(modulesJsonArray, Module.class);
-		
+
 		functionRepository.deleteAll();
 		menuRepository.deleteAll();
 		moduleRepository.deleteAll();

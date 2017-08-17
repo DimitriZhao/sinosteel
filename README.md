@@ -13,7 +13,7 @@
 用户名：admin      
 密码：admin     
 
-该地址所演示的是一个实际项目，用于北京国冶锐城公司，目前处于测试阶段
+该框架目前试用于实际项目
              
 # 项目截图       
 <img src="https://github.com/DimitriZhao/screenshots/blob/master/sinosteel/framework0.png" />      

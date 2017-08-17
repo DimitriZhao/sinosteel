@@ -100,5 +100,125 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "1",
+        "code": "PROJECT",
+        "name": "项目监理",        
+        "moduleIcon": "eye-o",
+        "modulePath": "/index/project",
+        "menus": [
+            {
+                "id": "1-0",
+                "code": "1-0",
+                "name": "项目信息",
+                "menuIcon": "database",
+                "menuPath": "/project_list",
+                "functions": [
+                    {
+                        "id": "1-0-F0",
+                        "code": "1-0-F0",
+                        "name": "新增项目",
+                        "functionString": "addProject"
+                    },
+                    {
+                        "id": "1-0-F1",
+                        "code": "1-0-F1",
+                        "name": "修改项目",
+                        "functionString": "editProject"
+                    },
+                    {
+                        "id": "1-0-F2",
+                        "code": "1-0-F2",
+                        "name": "删除项目",
+                        "functionString": "deleteProject"
+                    },
+                    {  
+                        "id": "1-0-F3",
+                        "code": "1-0-F3",
+                        "name": "新增课题",
+                        "functionString": "addTopic"
+                    },
+                    {
+                        "id": "1-0-F4",
+                        "code": "1-0-F4",
+                        "name": "修改课题",
+                        "functionString": "editTopic"
+                    },
+                    {
+                        "id": "1-0-F5",
+                        "code": "1-0-F5",
+                        "name": "删除课题",
+                        "functionString": "deleteTopic"
+                    },
+                    {
+                        "id": "1-0-F6",
+                        "code": "1-0-F6",
+                        "name": "新增关键节点",
+                        "functionString": "addMilestone"
+                    },
+                    {
+                        "id": "1-0-F7",
+                        "code": "1-0-F7",
+                        "name": "修改关键节点",
+                        "functionString": "editMilestone"
+                    },
+                    {
+                        "id": "1-0-F8",
+                        "code": "1-0-F8",
+                        "name": "删除关键节点",
+                        "functionString": "deleteMilestone"
+                    },
+                    {
+                        "id": "1-0-F9",
+                        "code": "1-0-F9",
+                        "name": "查询项目",
+                        "functionString": "queryProjects"
+                    }
+                ]                
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "code": "KNOWLEDGE",
+        "name": "知识库",
+        "moduleIcon": "global",
+        "modulePath": "/index/global",
+        "menus": [
+            {
+                "id": "4-0",
+                "code": "4-0",
+                "name": "国家标准规范",
+                "menuIcon": "book",
+                "menuPath": "/standard_list",
+                "functions": [
+                    {
+                        "id": "4-0-F0",
+                        "code": "4-0-F0",
+                        "name": "新增国家标准",
+                        "functionString": "addStandard"
+                    },
+                    {
+                        "id": "4-0-F1",
+                        "code": "4-0-F1",
+                        "name": "删除国家标准",
+                        "functionString": "deleteStandard"
+                    },
+                    {
+                        "id": "4-0-F2",
+                        "code": "4-0-F2",
+                        "name": "修改国家标准",
+                        "functionString": "editStandard"
+                    },
+                    {
+                        "id": "4-0-F3",
+                        "code": "4-0-F3",
+                        "name": "查询国家标准",
+                        "functionString": "queryStandards"
+                    }
+                ]
+            }
+        ]
     }
 ]

@@ -29,8 +29,6 @@ public class StandardService extends BaseService<Standard>
 	@Autowired
 	private SystemConfig systemConfig;
 	
-	private final String standardResourcePathHead = systemConfig.getProperty("standardResourcePathHead");
-	
 	@Autowired
 	private StandardRepository standardRepository;
 	
@@ -91,6 +89,7 @@ public class StandardService extends BaseService<Standard>
 	
 	public void addStandard(JSONObject params, List<MultipartFile> files, User user) throws Exception
 	{
+		String standardResourcePathHead = systemConfig.getProperty("standardResourcePathHead");
 		String standardId = UUID.randomUUID().toString();
 		
 		Standard standard = JSONObject.toJavaObject(params, Standard.class);
@@ -117,6 +116,8 @@ public class StandardService extends BaseService<Standard>
 	
 	public void editStandard(JSONObject params, List<MultipartFile> files, User user) throws Exception
 	{
+		String standardResourcePathHead = systemConfig.getProperty("standardResourcePathHead");
+		System.out.println(standardResourcePathHead);
 		Standard standard = JSONObject.toJavaObject(params, Standard.class);
 		String standardId = standard.getId();
 		

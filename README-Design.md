@@ -1,5 +1,5 @@
 # 设计思路
-这里来说下个人对于这个框架和项目的各个方面一个设计思路，不定期更新，想到什么就写什么，欢迎讨论，批评和指正。       
+这里来说下个人对于这个框架和项目的各个方面一些设计思路，不定期更新，想到什么就写什么，欢迎讨论，批评和指正。       
                 
 ## 综述
 可以想象如下场景：假设你在一家创业公司，公司里面只有你一个架构师。老板为了省钱，招的其它人都是刚毕业的大学生，体力好能干活有热情<del>会暖床</del>，但没法独立构建项目，也不会考虑代码解耦什么的，他们的任务仅仅是使用框架来写业务逻辑。因此，你所开发的框架，就需要做到能够快速地构建新项目以便于接活，能够让开发者尽可能地专注于业务逻辑以便于节省开发成本，尽可能地封装常用的功能以便于快速开发，这样公司才能赚更多的钱，你也能升职加薪，并且那些小同学们在开发的时候才会称赞你这个架构师很imba而不是在心里默念一句mmp。     
@@ -234,10 +234,45 @@ mybatis：首先改实体类Book，然后在mapper中添加新字段的映射，
 **不复杂的**
 业务实体了，就说明一定能够契合jpa规范，那么jpa实现起来就是比mybatis要容易方便，所以在不是极致追求效率的情况下，干嘛不用更合适的工具呢？（什么你说你们公司根本不定义实体类？那建议直接上jdbcTemplate，但是你们真的一个实体类都不定义嘛你确定嘛。。。）      
                     
-mybatis这么流行当然不是没有原因的，跟jpa相比，个人认为最大的区别恐怕就是其不囿于jpa，给开发者提供了足够的灵活性了，同时能够进行手动sql调优。当数据表是反范式设计的时候，比如可能大多数人都见过的例子：一个工单表有100左右个字段这种，比如：            
-ID，SHEET_CODE，CURRENT_STATUS,...等100个字段           
-                            
-还别说这还真是业务实体，然而过于庞大。我见过的解决方案是jpa只做部分字段的映射，其余交给sql语句。但是这样的话，jpa所能做到的事情就很有限，比如根据一个没被映射的字段来返回实体，这就很糟心了，因为hql就写不了了，而写sql的话，返回值要自己一个一个去映射，但是mybatis就不存在这样的问题。此外，如果根本不能抽象成业务实体，比如举个工控的例子，同一时间所有PLC点位的数值存储是个横表，也就是是说这么设计的：    
+mybatis这么流行当然不是没有原因的，跟jpa相比，个人认为最大的区别恐怕就是其不囿于jpa，给开发者提供了足够的灵活性了，同时能够进行手动sql调优。当数据表是反范式设计的时候，比如可能大多数人都见过的例子：一个工单表有100左右个字段这种，比如：                  
+
+SHEET_ID，SHEET_CODE，CURRENT_STATUS, CURRENT_HANDLER...等100个字段           
+
+还别说这还真是业务实体，然而过于庞大。我见过的解决方案是jpa只做部分字段的映射，其余交给sql语句，比如这样：            
+                             
+```
+/**
+* 跟上面相比，只映射了两个字段, CURRENT_STATUS没有映射
+*/
+@Entity
+@Table(name = "TBL_WORK_SHEET")
+public class WorkSheet
+{
+    @Id
+    @GeneratedValue(generator = "uuid") 
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(name = "SHEET_ID")
+    private String sheetId;
+
+    @Column(name = "SHEET_CODE")
+    private String sheetCode;
+
+    @Column(name = "CURRENT_STATUS")
+}
+```
+
+但是这样的话，jpa所能做到的事情就很有限，比如根据一个没被映射的字段（例如CURRENT_HANDLER）来返回实体，并且只映射几个字段（比如SHEET_CODE和CURRENT_STATUS），hql就写不了了，只能用NativeQuery写sql，返回值要自己一个一个去映射（因为addEntity的话不返回映射的所有字段是会报错的），但是mybatis就不存在这样的问题，mybatis可以这么写：   
+                 
+```
+@Select
+@Results(
+{
+    @Result(property = "sheetId", column = "SHEET_ID"),
+    @Result(property = "sheetCode", column = "SHEET_CODE")
+})
+```
+
+此外，如果根本不能抽象成业务实体，比如举个工控的例子，同一时间所有PLC点位的数值存储是个横表，也就是是说这么设计的：    
                   
 ID，TIME, VALUE1, VALUE2，VALUE3......            
                

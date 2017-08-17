@@ -3,11 +3,8 @@ package com.sinosteel.framework.core.base.domain;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import com.alibaba.fastjson.JSON;
 
@@ -17,8 +14,8 @@ public class BaseEntity implements Serializable
 	private static final long serialVersionUID = -7334806723394863536L;
 
 	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid")
+	//@GeneratedValue(generator = "uuid")
+	//@GenericGenerator(name = "uuid", strategy = "uuid")
 	@Column(name = "ID")
 	private String id;
 	
@@ -88,6 +85,14 @@ public class BaseEntity implements Serializable
 		this.alteredUserId = alteredUserId;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -123,13 +128,5 @@ public class BaseEntity implements Serializable
 	public String toString()
 	{
 		return JSON.toJSONString(this);
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 }
